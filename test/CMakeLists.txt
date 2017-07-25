@@ -21,6 +21,7 @@ project(cinder)
 include_directories(PRIVATE ${GTEST_INCLUDE_DIRS})
 
 add_executable(test_cinder
+	common/test_iterators
 	common/test_spikes
 	common/test_vector
 	models/test_current_source
