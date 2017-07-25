@@ -17,9 +17,9 @@
  */
 
 /**
- * @file lif.hpp
+ * @file array_utils.hpp
  *
- * Implementation of the simple linear integrate and fire neuron model.
+ * Utilities for compile-time constant std::array instances.
  *
  * @author Andreas Stöckel
  */
