@@ -25,8 +25,8 @@
  */
 
 #include <algorithm>
-#include <vector>
 #include <random>
+#include <vector>
 
 #include <cinder/common/types.hpp>
 
@@ -165,6 +165,28 @@ static inline std::vector<Time> constant_frequency_spike_train(Time t_offs,
                                                                float frequency)
 {
 	return constant_interval_spike_train(t_offs, n, Time::sec(1.0 / frequency));
+}
+
+/**
+ * Simulates spike loss by randomly removing spikes from the given spike train.
+ */
+static inline std::vector<Time> simulate_spike_loss(
+    const std::vector<Time> &spike_train, Real spike_loss, int seed = -1)
+{
+	if (spike_loss <= 0.0) {
+		return spike_train;
+	}
+
+	std::default_random_engine gen(seed == -1 ? std::random_device()() : seed);
+	std::uniform_real_distribution<Real> dist(0.0_R, 1.0_R);
+
+	std::vector<Time> res;
+	for (const Time &t : spike_train) {
+		if (dist(gen) >= spike_loss) {
+			res.emplace_back(t);
+		}
+	}
+	return res;
 }
 
 /**
